@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.investfar.dao.BaseDao">
+	<select id="getAllField" resultType="com.investfar.model.Field">
+		SELECT id,name_zh
+		fieldDesc_cn, name_en fieldDesc_en FROM inviting_basedata
+		where
+		type='2' order by order_num
+	</select>
+
+	<select id="getcountByEmail" resultType="int">
+		select count(*) from
+		inviting_inquiry_account where email=#{email}
+	</select>
+
+	<insert id="createAccount">
+		insert into inviting_inquiry_account(email)
+		values(#{email});
+	</insert>
+
+
+	<select id="getInfo" resultType="com.investfar.model.Info">
+		SELECT
+		info.id id, left(title_cn,10) as
+		title,
+		concat(left(description_cn, 57),'…') as description,
+		name_zh as
+		country,additional1,additional2,additional3,createTime
+		FROM
+		(SELECT *
+		FROM
+		inviting_info
+		WHERE upload_status='1'
+		<if test="fieldId != null">
+			and	fieldId=#{fieldId}
+		</if>
+		and is_large='0'
+		ORDER BY is_top,inquiryNum,last_inquiry_time
+		LIMIT
+		#{limitStart},#{pageSize}) info,
+		inviting_basedata
+		WHERE
+		info.countryId =
+		inviting_basedata.id
+	</select>
+	<select id="getCountForInfo" resultType="int">
+		SELECT
+		count(*)
+		FROM
+		inviting_info
+		WHERE upload_status='1'
+		<if test="fieldId != null">
+			and	fieldId=#{fieldId}
+		</if>
+		and is_large='0'
+	</select>
+
+	<select id="getLargeInfo" resultType="com.investfar.model.Info">
+		SELECT
+		info.id id, left(title_cn,10) as
+		title,
+		<!-- concat(left(description_cn, 21),<![CDATA['<br>']]>,substring(description_cn,
+		22, 19),'……') as description, -->
+		concat(left(description_cn, 57),'…') as description,
+		name_zh as
+		country,additional1,additional2,additional3,createTime
+		FROM
+		(SELECT *
+		FROM
+		inviting_info
+		WHERE upload_status='1'
+		and is_large='1'
+		<if test="querytext != null">
+			AND
+			(description_cn LIKE '%${querytext}%'
+			OR
+			title_cn LIKE
+			'%${querytext}%'
+			)
+		</if>
+		ORDER BY is_top,inquiryNum,last_inquiry_time
+		) info,
+		inviting_basedata
+		WHERE
+		info.countryId =
+		inviting_basedata.id
+	</select>
+	<select id="getInfoById" resultType="com.investfar.model.Info">
+		select id,title_cn as
+		title,description_cn as description,is_large from inviting_info
+		where
+		id=#{id};
+	</select>
+
+	<insert id="createInquiry" parameterType="com.investfar.model.Inquiry">
+
+		insert into
+		inviting_inquiry(field_id,info_id,inquiry_email,content,requires1,requires2,requires3,group_send)
+		values(#{field_id},#{info_id},#{inquiry_email},#{content},#{requires1},#{requires2},#{requires3},#{group_send});
+
+	</insert>
+
+	<update id="updateInquiryNum">
+		update inviting_info set
+		inquiryNum=inquiryNum+1,last_inquiry_time=now(),is_top=0
+		where id=#{id}
+	</update>
+	<select id="getEmailSuffixList" resultType="String">
+		SELECT name_en FROM inviting_basedata where type='4' order by order_num
+	</select>
+</mapper>

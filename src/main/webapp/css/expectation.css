@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+
+body {
+	text-align: left;
+}
+
+.title-input{width: 565px;}
+.description-textarea{width: 100%}

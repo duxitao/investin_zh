@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+
+.titel {
+	margin-top: 2em;
+	border-bottom: 1px rgb(77, 77, 77) solid;
+	font-size: 1.8em;
+	
+}
+
+.submit {
+	font-size: 2.5em;
+	margin-top: 2em;
+}
+
+.select2-selection__rendered {
+	text-align: left;
+	font-size: 1em;
+}
+
+.info {
+	font-size: 1.5em;
+	margin-top: 3em;
+}
+
+.login {
+	font-size: 2em;
+	font-weight: 800;
+}
+
+.modal-footer {
+	text-align: center;
+}
+
+#email_lbl {
+	width: 50px;
+}
+
+#code_lbl {
+	width: 50px;
+}
+/*验证码输入框长度+按钮长度=邮件输入框长度*/
+#email {
+	width: 130px;
+}
+
+#code {
+	width: 160px;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+#generateBtn {
+	width: 100px;
+}

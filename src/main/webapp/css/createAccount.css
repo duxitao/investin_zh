@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+
+.title {
+	font-size: 20px;
+	color: rgb(0, 0, 225);
+	margin-bottom: 30px;
+}
+
+.info-div {
+	border: 1px solid #0080ff;
+	margin: 20px 0;
+	border-radius: 4px;
+}
+
+.info-div p {
+	margin: 10px;
+}
+
+#name {
+	width: 468px
+}
+
+#company {
+	width: 382px
+}
+
+#tel {
+	width: 465px
+}
+
+#email_lbl {
+	width: 50px;
+}
+
+#code_lbl {
+	width: 50px;
+}
+/*验证码输入框长度+按钮长度=邮件输入框长度*/
+#email {
+	width: 260px;
+}
+
+#code {
+	width: 198px;
+	font-size: 14px;
+	font-weight: 400;
+	color: rgb(77, 77, 77);
+}
+
+#generateBtn {
+	width: 62px;
+}
